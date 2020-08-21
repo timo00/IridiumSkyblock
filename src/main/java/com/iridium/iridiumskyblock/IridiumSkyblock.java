@@ -55,6 +55,8 @@ public class IridiumSkyblock extends JavaPlugin {
     @Getter
     public static BlockValues blockValues;
     @Getter
+    public static SQL sql;
+    @Getter
     public static Shop shop;
     public static TopGUI topGUI;
     @Getter
@@ -73,6 +75,9 @@ public class IridiumSkyblock extends JavaPlugin {
 
     @Getter
     public static IslandManager islandManager;
+    @Getter
+    public static SQLManager sqlManager;
+
     @Getter
     private static CommandManager commandManager;
     public List<String> languages = new ArrayList<>();
@@ -586,6 +591,7 @@ public class IridiumSkyblock extends JavaPlugin {
         blockValues = persist.getFile(BlockValues.class).exists() ? persist.load(BlockValues.class) : new BlockValues();
         shop = persist.getFile(Shop.class).exists() ? persist.load(Shop.class) : new Shop();
         border = persist.getFile(Border.class).exists() ? persist.load(Border.class) : new Border();
+        sql = persist.getFile(SQL.class).exists() ? persist.load(SQL.class) : new SQL();
 
         missions.missions.remove(null);
 
@@ -702,6 +708,10 @@ public class IridiumSkyblock extends JavaPlugin {
             e.printStackTrace();
         }
         getConfiguration().biomes.sort(Comparator.comparing(XBiome::toString));
+
+        sqlManager = new SQLManager();
+        sqlManager.setupConnection();
+
         return true;
     }
 
@@ -728,6 +738,7 @@ public class IridiumSkyblock extends JavaPlugin {
             if (blockValues != null) persist.save(blockValues);
             if (shop != null) persist.save(shop);
             if (border != null) persist.save(border);
+            if (sql != null) persist.save(sql);
         });
     }
 }
