@@ -12,7 +12,7 @@ import java.util.logging.Level;
 public class SQLManager {
     private Connection connection;
 
-    public Connection setupConnection() {
+    public void setupConnection() {
         final SQL sql = IridiumSkyblock.getSql();
         //Check if we need to use SQL or SQLLite
         if (IridiumSkyblock.sql.username.isEmpty()) {
@@ -29,7 +29,6 @@ public class SQLManager {
             try {
                 Class.forName("org.sqlite.JDBC");
                 connection = DriverManager.getConnection("jdbc:sqlite:" + dataFolder);
-                return connection;
             } catch (SQLException ex) {
                 IridiumSkyblock.getInstance().getLogger().log(Level.SEVERE, "SQLite exception on initialize", ex);
             } catch (ClassNotFoundException ex) {
@@ -40,14 +39,12 @@ public class SQLManager {
             try {
                 Class.forName("com.mysql.jdbc.Driver");
                 connection = DriverManager.getConnection("jdbc:mysql://" + sql.host + ":" + sql.port + "/" + sql.database, sql.username, sql.password);
-                return connection;
             } catch (SQLException ex) {
                 IridiumSkyblock.getInstance().getLogger().log(Level.SEVERE, "SQLite exception on initialize", ex);
             } catch (ClassNotFoundException ex) {
                 IridiumSkyblock.getInstance().getLogger().log(Level.SEVERE, "You need the SQLite JBDC library. Google it. Put it in /lib folder.");
             }
         }
-        return null;
     }
 
     public Connection getConnection() {
