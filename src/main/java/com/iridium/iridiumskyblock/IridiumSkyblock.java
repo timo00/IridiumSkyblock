@@ -727,6 +727,9 @@ public class IridiumSkyblock extends JavaPlugin {
 
     public void saveData() {
         if (islandManager != null) persist.save(islandManager);
+        for (User user : UserManager.cache.values()) {
+            UserManager.saveUser(user);
+        }
     }
 
     public void saveConfigs() {
