@@ -36,7 +36,6 @@ public class UserManager {
                 user.bypassing = resultSet.getBoolean("bypassing");
                 user.islandChat = resultSet.getBoolean("chat");
                 user.flying = resultSet.getBoolean("flying");
-                IridiumSkyblock.getInstance().getLogger().info(resultSet.getString("role"));
                 user.role = Role.valueOf(resultSet.getString("role"));
                 cache.put(uuid, user);
                 return user;

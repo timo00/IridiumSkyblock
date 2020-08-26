@@ -59,7 +59,7 @@ public class SQLManager {
                     "name STRING, money DOUBLE, exp INTEGER, biome STRING, lastRegen BIGINT, PRIMARY KEY (id));");
 
             connection.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS claims "
-                    + "x INTEGER, z INTEGER, island INTEGER");
+                    + "(x INTEGER, z INTEGER, island INTEGER);");
 
         } catch (SQLException ex) {
             IridiumSkyblock.getInstance().getLogger().log(Level.SEVERE, "SQLite exception on Creating Tables", ex);

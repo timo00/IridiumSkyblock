@@ -22,7 +22,7 @@ public class ClaimManager {
             statement.setInt(2, z);
 
             ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
+            while (resultSet.next()) {
                 islands.add(resultSet.getInt("island"));
             }
         } catch (SQLException throwables) {
