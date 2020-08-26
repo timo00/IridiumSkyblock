@@ -9,12 +9,10 @@ import org.bukkit.entity.Player;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 public class IslandManager {
 
     public Map<Integer, Island> islands = new HashMap<>();
-    public Map<List<Integer>, Set<Integer>> islandCache = new HashMap<>();
 
     int length = 1;
     int current = 0;
@@ -131,17 +129,11 @@ public class IslandManager {
         if (!isIslandWorld(location)) return null;
 
         final Chunk chunk = location.getChunk();
-        final List<Integer> chunkKey = Collections.unmodifiableList(Arrays.asList(chunk.getX(), chunk.getZ()));
 
         final double x = location.getX();
         final double z = location.getZ();
 
-        final Set<Integer> islandIds = islandCache.computeIfAbsent(chunkKey, (hash) -> islands
-                .values()
-                .stream()
-                .filter(island -> island.isInIsland(x, z))
-                .map(Island::getId)
-                .collect(Collectors.toSet()));
+        final Set<Integer> islandIds = ClaimManager.getIslands(chunk.getX(), chunk.getZ());
 
         for (int id : islandIds) {
             final Island island = islands.get(id);
@@ -151,7 +143,7 @@ public class IslandManager {
 
         for (Island island : islands.values()) {
             if (!island.isInIsland(x, z)) continue;
-            islandIds.add(island.getId());
+            ClaimManager.addClaim(chunk.getX(), chunk.getZ(), island.getId());
             return island;
         }
 
@@ -181,7 +173,6 @@ public class IslandManager {
     public void removeIsland(Island island) {
         final int id = island.getId();
         islands.remove(id);
-        islandCache
-                .forEach((key, value) -> value.remove(id));
+        ClaimManager.removeClaims(id);
     }
 }
