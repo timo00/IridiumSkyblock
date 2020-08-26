@@ -1,5 +1,6 @@
-package com.iridium.iridiumskyblock;
+package com.iridium.iridiumskyblock.managers;
 
+import com.iridium.iridiumskyblock.IridiumSkyblock;
 import com.iridium.iridiumskyblock.configs.SQL;
 
 import java.io.File;
@@ -30,9 +31,9 @@ public class SQLManager {
                 Class.forName("org.sqlite.JDBC");
                 connection = DriverManager.getConnection("jdbc:sqlite:" + dataFolder);
             } catch (SQLException ex) {
-                IridiumSkyblock.getInstance().getLogger().log(Level.SEVERE, "SQLite exception on initialize", ex);
+                IridiumSkyblock.getInstance().getLogger().log(Level.SEVERE, "SQL exception on initialize", ex);
             } catch (ClassNotFoundException ex) {
-                IridiumSkyblock.getInstance().getLogger().log(Level.SEVERE, "You need the SQLite JBDC library. Google it. Put it in /lib folder.");
+                IridiumSkyblock.getInstance().getLogger().log(Level.SEVERE, "You need the SQL library.");
             }
         } else {
             //Use SQL
@@ -44,6 +45,20 @@ public class SQLManager {
             } catch (ClassNotFoundException ex) {
                 IridiumSkyblock.getInstance().getLogger().log(Level.SEVERE, "You need the SQLite JBDC library. Google it. Put it in /lib folder.");
             }
+        }
+    }
+
+    public void createTables() {
+        try {
+            connection.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS users "
+                    + "(UUID VARCHAR(255), name VARCHAR(255), island INTEGER, role VARCHAR(255), bypassing BOOLEAN, chat BOOLEAN, flying BOOLEAN, lastecreate BIGINT, PRIMARY KEY (UUID));");
+
+            connection.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS islands "
+                    + "(id INTEGER, pos1x INTEGER, pos1z INTEGER, pos2x INTEGER, pos2z INTEGER, homex INTEGER, homey INTEGER, homez INTEGER, spawnerBooster INTEGER, farmingBooster INTEGER, expBooster INTEGER, flightBooster INTEGER, " +
+                    "crystals INTEGER, sizeLevel INTEGER, memberLevel INTEGER, warpLevel INTEGER, oreLevel INTEGER, value DOUBLE, startvalue DOUBLE, extravalue DOUBLE, visit BOOLEAN, borderColor STRING, schematic STRING, netherschematic STRING, " +
+                    "name STRING, money DOUBLE, exp INTEGER, biome STRING, lastRegen BIGINT, PRIMARY KEY (id));");
+        } catch (SQLException ex) {
+            IridiumSkyblock.getInstance().getLogger().log(Level.SEVERE, "SQLite exception on Creating Tables", ex);
         }
     }
 

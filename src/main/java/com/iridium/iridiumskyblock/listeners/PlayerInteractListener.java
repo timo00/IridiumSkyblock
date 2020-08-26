@@ -1,19 +1,18 @@
 package com.iridium.iridiumskyblock.listeners;
 
-import com.iridium.iridiumskyblock.*;
-import org.bukkit.GameMode;
+import com.iridium.iridiumskyblock.IridiumSkyblock;
+import com.iridium.iridiumskyblock.Island;
+import com.iridium.iridiumskyblock.User;
+import com.iridium.iridiumskyblock.Utils;
+import com.iridium.iridiumskyblock.managers.IslandManager;
+import com.iridium.iridiumskyblock.managers.UserManager;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
-import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
@@ -28,7 +27,7 @@ public class PlayerInteractListener implements Listener {
             final IslandManager islandManager = IridiumSkyblock.getIslandManager();
             if (!islandManager.isIslandWorld(playerLocation)) return;
 
-            final User user = User.getUser(player);
+            final User user = UserManager.getUser(player.getUniqueId());
             final Block block = event.getClickedBlock();
 
             if (event.getAction().toString().startsWith("RIGHT_CLICK")) {
@@ -74,7 +73,7 @@ public class PlayerInteractListener implements Listener {
     public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
         try {
             final Player player = event.getPlayer();
-            final User user = User.getUser(player);
+            final User user = UserManager.getUser(player.getUniqueId());
             final Entity rightClicked = event.getRightClicked();
             final Location location = rightClicked.getLocation();
             final IslandManager islandManager = IridiumSkyblock.getIslandManager();

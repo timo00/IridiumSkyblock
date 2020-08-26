@@ -1,6 +1,7 @@
 package com.iridium.iridiumskyblock.commands;
 
 import com.iridium.iridiumskyblock.*;
+import com.iridium.iridiumskyblock.managers.UserManager;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -16,7 +17,7 @@ public class LeaveCommand extends Command {
     @Override
     public void execute(CommandSender sender, String[] args) {
         Player p = (Player) sender;
-        User user = User.getUser(p);
+        User user = UserManager.getUser(p.getUniqueId());
         if (user.getIsland() != null) {
             if (user.role.equals(Role.Owner)) {
                 sender.sendMessage(Utils.color(IridiumSkyblock.getMessages().cantLeaveIfOwner.replace("%prefix%", IridiumSkyblock.getConfiguration().prefix)));

@@ -3,6 +3,7 @@ package com.iridium.iridiumskyblock.commands;
 import com.iridium.iridiumskyblock.*;
 import com.iridium.iridiumskyblock.configs.Schematics;
 import com.iridium.iridiumskyblock.gui.ConfirmationGUI;
+import com.iridium.iridiumskyblock.managers.UserManager;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -19,7 +20,7 @@ public class RegenCommand extends Command {
     @Override
     public void execute(CommandSender sender, String[] args) {
         Player p = (Player) sender;
-        User user = User.getUser(p);
+        User user = UserManager.getUser(p.getUniqueId());
         if (user.getIsland() != null) {
             if (user.role.equals(Role.Owner)) {
                 if (user.bypassing || user.getIsland().getPermissions(user.role).regen) {

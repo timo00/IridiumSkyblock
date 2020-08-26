@@ -2,6 +2,8 @@ package com.iridium.iridiumskyblock.listeners;
 
 import com.iridium.iridiumskyblock.*;
 import com.iridium.iridiumskyblock.configs.Missions;
+import com.iridium.iridiumskyblock.managers.IslandManager;
+import com.iridium.iridiumskyblock.managers.UserManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -29,7 +31,7 @@ public class BlockBreakListener implements Listener {
             if (island == null) return;
 
             final Player player = event.getPlayer();
-            final User user = User.getUser(player);
+            final User user = UserManager.getUser(player.getUniqueId());
 
             if (user.islandID == island.getId()) {
                 for (Missions.Mission mission : IridiumSkyblock.getMissions().missions) {

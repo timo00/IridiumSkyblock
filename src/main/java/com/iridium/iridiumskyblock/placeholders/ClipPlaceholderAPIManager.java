@@ -5,6 +5,7 @@ import com.iridium.iridiumskyblock.IridiumSkyblock;
 import com.iridium.iridiumskyblock.Island;
 import com.iridium.iridiumskyblock.User;
 import com.iridium.iridiumskyblock.Utils;
+import com.iridium.iridiumskyblock.managers.UserManager;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -57,7 +58,7 @@ public class ClipPlaceholderAPIManager extends PlaceholderExpansion {
         int minute = (int) Math.floor((time - day * 86400 - hours * 3600) / 60.00);
         int second = (int) Math.floor((time - day * 86400 - hours * 3600) % 60.00);
 
-        User user = User.getUser(player);
+        User user = UserManager.getUser(player.getUniqueId());
 
         switch (placeholder) {
             case "island_value":
@@ -67,7 +68,7 @@ public class ClipPlaceholderAPIManager extends PlaceholderExpansion {
             case "island_rank":
                 return user.getIsland() != null ? NumberFormat.getInstance().format(Utils.getIslandRank(user.getIsland())) + "" : IridiumSkyblock.getConfiguration().placeholderDefaultValue;
             case "island_owner":
-                return user.getIsland() != null ? User.getUser(user.getIsland().getOwner()).name : IridiumSkyblock.getConfiguration().placeholderDefaultValue;
+                return user.getIsland() != null ? UserManager.getUser(user.getIsland().getOwner()).name : IridiumSkyblock.getConfiguration().placeholderDefaultValue;
             case "island_name":
                 return user.getIsland() != null ? user.getIsland().getName() : IridiumSkyblock.getConfiguration().placeholderDefaultValue;
             case "island_crystals":
@@ -78,7 +79,7 @@ public class ClipPlaceholderAPIManager extends PlaceholderExpansion {
                 if (user.getIsland() == null) return IridiumSkyblock.getConfiguration().placeholderDefaultValue;
                 int online = 0;
                 for (String member : user.getIsland().getMembers()) {
-                    if (Bukkit.getPlayer(User.getUser(member).name) != null) {
+                    if (Bukkit.getPlayer(UserManager.getUser(member).name) != null) {
                         online++;
                     }
                 }
@@ -120,7 +121,7 @@ public class ClipPlaceholderAPIManager extends PlaceholderExpansion {
             try {
                 Integer integer = Integer.parseInt(placeholder.replace("island_top_name_", ""));
                 List<Island> islands = Utils.getTopIslands();
-                return islands.size() > integer - 1 ? User.getUser(Utils.getTopIslands().get(integer - 1).getOwner()).name : IridiumSkyblock.getConfiguration().placeholderDefaultValue;
+                return islands.size() > integer - 1 ? UserManager.getUser(Utils.getTopIslands().get(integer - 1).getOwner()).name : IridiumSkyblock.getConfiguration().placeholderDefaultValue;
             } catch (NumberFormatException e) {
                 e.printStackTrace();
             }

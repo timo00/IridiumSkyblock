@@ -4,6 +4,7 @@ import com.iridium.iridiumskyblock.IridiumSkyblock;
 import com.iridium.iridiumskyblock.Island;
 import com.iridium.iridiumskyblock.User;
 import com.iridium.iridiumskyblock.Utils;
+import com.iridium.iridiumskyblock.managers.UserManager;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
@@ -26,11 +27,11 @@ public class BanCommand extends Command {
             return;
         }
         Player p = (Player) sender;
-        User user = User.getUser(p);
+        User user = UserManager.getUser(p.getUniqueId());
         if (user.getIsland() != null) {
             OfflinePlayer player = Bukkit.getOfflinePlayer(args[1]);
-            if (!user.getIsland().equals(User.getUser(player).getIsland())) {
-                user.getIsland().addBan(User.getUser(player));
+            if (!user.getIsland().equals(UserManager.getUser(player.getUniqueId()).getIsland())) {
+                user.getIsland().addBan(UserManager.getUser(player.getUniqueId()));
                 sender.sendMessage(Utils.color(IridiumSkyblock.getMessages().playerBanned.replace("%player%", player.getName()).replace("%prefix%", IridiumSkyblock.getConfiguration().prefix)));
                 if (player.getPlayer() != null) {
                     if (user.getIsland().isInIsland(player.getPlayer().getLocation())) {
@@ -53,8 +54,8 @@ public class BanCommand extends Command {
         }
         if (island != null) {
             OfflinePlayer player = Bukkit.getOfflinePlayer(args[3]);
-            if (!island.equals(User.getUser(player).getIsland())) {
-                island.addBan(User.getUser(player));
+            if (!island.equals(UserManager.getUser(player.getUniqueId()).getIsland())) {
+                island.addBan(UserManager.getUser(player.getUniqueId()));
                 sender.sendMessage(Utils.color(IridiumSkyblock.getMessages().playerBanned.replace("%player%", player.getName()).replace("%prefix%", IridiumSkyblock.getConfiguration().prefix)));
                 if (player.getPlayer() != null) {
                     if (island.isInIsland(player.getPlayer().getLocation())) {

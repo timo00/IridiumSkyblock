@@ -4,6 +4,7 @@ import com.iridium.iridiumskyblock.IridiumSkyblock;
 import com.iridium.iridiumskyblock.Island;
 import com.iridium.iridiumskyblock.User;
 import com.iridium.iridiumskyblock.Utils;
+import com.iridium.iridiumskyblock.managers.UserManager;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -20,7 +21,7 @@ public class SetWarpCommand extends Command {
     public void execute(CommandSender sender, String[] args) {
         Player p = (Player) sender;
         if (args.length == 2 || args.length == 3) {
-            User user = User.getUser(p);
+            User user = UserManager.getUser(p.getUniqueId());
             if (user.getIsland() != null) {
                 String password = args.length == 3 ? args[2] : "";
                 if (Utils.isSafe(p.getLocation(), user.getIsland())) {

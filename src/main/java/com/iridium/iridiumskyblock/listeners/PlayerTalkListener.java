@@ -4,6 +4,7 @@ import com.iridium.iridiumskyblock.IridiumSkyblock;
 import com.iridium.iridiumskyblock.Island;
 import com.iridium.iridiumskyblock.User;
 import com.iridium.iridiumskyblock.Utils;
+import com.iridium.iridiumskyblock.managers.UserManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -16,7 +17,7 @@ public class PlayerTalkListener implements Listener {
     public void onPlayerTalk(AsyncPlayerChatEvent event) {
         try {
             final Player player = event.getPlayer();
-            final User user = User.getUser(player);
+            final User user = UserManager.getUser(player.getUniqueId());
 
             if (user.warp != null) {
                 if (user.warp.getPassword().equals(event.getMessage())) {
@@ -65,7 +66,7 @@ public class PlayerTalkListener implements Listener {
 
             if (island != null && user.islandChat) {
                 for (String member : island.getMembers()) {
-                    final Player islandPlayer = Bukkit.getPlayer(User.getUser(member).name);
+                    final Player islandPlayer = Bukkit.getPlayer(UserManager.getUser(member).name);
                     if (islandPlayer == null) continue;
                     islandPlayer.sendMessage(Utils.color(IridiumSkyblock.getMessages().chatFormat)
                             .replace(IridiumSkyblock.getConfiguration().chatValuePlaceholder, island.getValue() + "")

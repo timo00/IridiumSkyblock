@@ -4,6 +4,7 @@ import com.iridium.iridiumskyblock.IridiumSkyblock;
 import com.iridium.iridiumskyblock.User;
 import com.iridium.iridiumskyblock.Utils;
 import com.iridium.iridiumskyblock.configs.Schematics;
+import com.iridium.iridiumskyblock.managers.UserManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -102,7 +103,7 @@ public class CommandManager implements CommandExecutor, TabCompleter {
             } else {
                 if (cs instanceof Player) {
                     Player p = (Player) cs;
-                    User u = User.getUser(p);
+                    User u = UserManager.getUser(p.getUniqueId());
                     if (u.getIsland() != null) {
                         if (u.getIsland().getSchematic() == null) {
                             if (IridiumSkyblock.getSchematics().schematics.size() == 1) {

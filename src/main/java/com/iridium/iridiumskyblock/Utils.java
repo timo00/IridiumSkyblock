@@ -1,6 +1,7 @@
 package com.iridium.iridiumskyblock;
 
 import com.iridium.iridiumskyblock.configs.Inventories;
+import com.iridium.iridiumskyblock.managers.UserManager;
 import com.iridium.iridiumskyblock.support.Vault;
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import org.bukkit.ChatColor;
@@ -300,7 +301,7 @@ public class Utils {
     }
 
     public static void pay(Player p, double vault, int crystals) {
-        User u = User.getUser(p);
+        User u = UserManager.getUser(p.getUniqueId());
         if (u.getIsland() != null) {
             u.getIsland().setCrystals(u.getIsland().getCrystals() + crystals);
             if (Vault.econ == null) {
@@ -318,7 +319,7 @@ public class Utils {
     }
 
     public static boolean canBuy(Player p, double vault, int crystals) {
-        User u = User.getUser(p);
+        User u = UserManager.getUser(p.getUniqueId());
         if (u.getIsland() != null) {
             if (Vault.econ != null) {
                 if (Vault.econ.getBalance(p) >= vault && u.getIsland().getCrystals() >= crystals) {

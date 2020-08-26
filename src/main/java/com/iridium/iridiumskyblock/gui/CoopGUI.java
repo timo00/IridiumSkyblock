@@ -4,7 +4,7 @@ import com.iridium.iridiumskyblock.IridiumSkyblock;
 import com.iridium.iridiumskyblock.Island;
 import com.iridium.iridiumskyblock.User;
 import com.iridium.iridiumskyblock.Utils;
-import org.bukkit.OfflinePlayer;
+import com.iridium.iridiumskyblock.managers.UserManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -38,7 +38,7 @@ public class CoopGUI extends GUI implements Listener {
                 Island is = IridiumSkyblock.getIslandManager().getIslandViaId(id);
                 if (is != null) {
                     islands.put(i, id);
-                    User user = User.getUser(is.getOwner());
+                    User user = UserManager.getUser(is.getOwner());
                     ItemStack head = Utils.makeItem(IridiumSkyblock.getInventories().islandcoop, Arrays.asList(new Utils.Placeholder("player", user.name), new Utils.Placeholder("name", is.getName()), new Utils.Placeholder("rank", Utils.getIslandRank(is) + ""), new Utils.Placeholder("value", NumberFormat.getInstance().format(is.getValue()) + "")));
                     setItem(i, head);
                     i++;
@@ -57,7 +57,7 @@ public class CoopGUI extends GUI implements Listener {
             if (e.getClickedInventory() == null || !e.getClickedInventory().equals(getInventory())) return;
             if (islands.containsKey(e.getSlot())) {
                 Island island = IridiumSkyblock.getIslandManager().getIslandViaId(islands.get(e.getSlot()));
-                User u = User.getUser((OfflinePlayer) e.getWhoClicked());
+                User u = UserManager.getUser(e.getWhoClicked().getUniqueId());
                 if (e.getClick().equals(ClickType.RIGHT)) {
                     if (u.bypassing || u.getIsland().getPermissions(u.getRole()).coop) {
                         getIsland().removeCoop(island);

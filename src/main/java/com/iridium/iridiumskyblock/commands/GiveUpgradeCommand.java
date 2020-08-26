@@ -2,8 +2,8 @@ package com.iridium.iridiumskyblock.commands;
 
 import com.iridium.iridiumskyblock.IridiumSkyblock;
 import com.iridium.iridiumskyblock.Island;
-import com.iridium.iridiumskyblock.User;
 import com.iridium.iridiumskyblock.Utils;
+import com.iridium.iridiumskyblock.managers.UserManager;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
@@ -28,7 +28,7 @@ public class GiveUpgradeCommand extends Command {
         if (Bukkit.getPlayer(args[1]) != null) {
             OfflinePlayer player = Bukkit.getPlayer(args[1]);
             if (player != null) {
-                Island island = User.getUser(player).getIsland();
+                Island island = UserManager.getUser(player.getUniqueId()).getIsland();
                 if (island != null) {
                     try {
                         if (args[2].equalsIgnoreCase("size")) {

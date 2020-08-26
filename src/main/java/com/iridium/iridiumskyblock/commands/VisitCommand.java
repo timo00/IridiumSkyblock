@@ -4,6 +4,7 @@ import com.iridium.iridiumskyblock.IridiumSkyblock;
 import com.iridium.iridiumskyblock.Island;
 import com.iridium.iridiumskyblock.User;
 import com.iridium.iridiumskyblock.Utils;
+import com.iridium.iridiumskyblock.managers.UserManager;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
@@ -26,9 +27,9 @@ public class VisitCommand extends Command {
             return;
         }
         OfflinePlayer player = Bukkit.getOfflinePlayer(args[1]);
-        User user = User.getUser(player);
+        User user = UserManager.getUser(player.getUniqueId());
         if (user.getIsland() != null) {
-            if (user.getIsland().isVisit() || User.getUser(p).bypassing) {
+            if (user.getIsland().isVisit() || UserManager.getUser(p.getUniqueId()).bypassing) {
                 user.getIsland().teleportHome(p);
             } else {
                 sender.sendMessage(Utils.color(IridiumSkyblock.getMessages().playersIslandIsPrivate.replace("%prefix%", IridiumSkyblock.getConfiguration().prefix)));

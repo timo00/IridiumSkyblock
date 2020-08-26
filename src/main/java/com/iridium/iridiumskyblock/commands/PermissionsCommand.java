@@ -2,6 +2,7 @@ package com.iridium.iridiumskyblock.commands;
 
 import com.iridium.iridiumskyblock.Island;
 import com.iridium.iridiumskyblock.User;
+import com.iridium.iridiumskyblock.managers.UserManager;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -17,7 +18,7 @@ public class PermissionsCommand extends Command {
     @Override
     public void execute(CommandSender sender, String[] args) {
         Player player = (Player) sender;
-        User user = User.getUser(player);
+        User user = UserManager.getUser(player.getUniqueId());
         Island island = user.getIsland();
         if (island != null) {
             player.openInventory(island.getPermissionsGUI().getInventory());

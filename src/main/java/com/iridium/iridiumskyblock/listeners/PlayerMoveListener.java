@@ -4,10 +4,11 @@ import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.spawn.EssentialsSpawn;
 import com.iridium.iridiumskyblock.IridiumSkyblock;
 import com.iridium.iridiumskyblock.Island;
-import com.iridium.iridiumskyblock.IslandManager;
 import com.iridium.iridiumskyblock.User;
 import com.iridium.iridiumskyblock.Utils;
 import com.iridium.iridiumskyblock.configs.Config;
+import com.iridium.iridiumskyblock.managers.IslandManager;
+import com.iridium.iridiumskyblock.managers.UserManager;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -41,7 +42,7 @@ public class PlayerMoveListener implements Listener {
                     else
                         island.teleportNetherHome(player);
                 } else {
-                    final User user = User.getUser(player);
+                    final User user = UserManager.getUser(player.getUniqueId());
                     if (user.getIsland() != null) {
                         if (world.getName().equals(islandManager.getWorld().getName()))
                             user.getIsland().teleportHome(player);
@@ -60,7 +61,7 @@ public class PlayerMoveListener implements Listener {
                 }
             }
 
-            final User user = User.getUser(player);
+            final User user = UserManager.getUser(player.getUniqueId());
             final Island island = user.getIsland();
             if (island == null) return;
 

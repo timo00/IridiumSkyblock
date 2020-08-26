@@ -1,6 +1,7 @@
 package com.iridium.iridiumskyblock.commands;
 
 import com.iridium.iridiumskyblock.*;
+import com.iridium.iridiumskyblock.managers.UserManager;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
@@ -22,9 +23,9 @@ public class KickCommand extends Command {
             return;
         }
         Player p = (Player) sender;
-        User user = User.getUser(p); // User kicking the player
+        User user = UserManager.getUser(p.getUniqueId()); // User kicking the player
         OfflinePlayer player = Bukkit.getOfflinePlayer(args[1]);
-        User u = User.getUser(player); // Player we want to kick
+        User u = UserManager.getUser(player.getUniqueId()); // Player we want to kick
         if (user.getIsland() != null) {
             if (user.getIsland().equals(u.getIsland())) {
                 if (u.role.equals(Role.Owner)) {
@@ -53,7 +54,7 @@ public class KickCommand extends Command {
             return;
         }
         OfflinePlayer player = Bukkit.getOfflinePlayer(args[1]);
-        User u = User.getUser(player); // Player we want to kick
+        User u = UserManager.getUser(player.getUniqueId()); // Player we want to kick
         if (island != null) {
             if (island.equals(u.getIsland())) {
                 if (u.role.equals(Role.Owner)) {

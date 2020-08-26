@@ -4,6 +4,7 @@ import com.iridium.iridiumskyblock.IridiumSkyblock;
 import com.iridium.iridiumskyblock.Island;
 import com.iridium.iridiumskyblock.User;
 import com.iridium.iridiumskyblock.Utils;
+import com.iridium.iridiumskyblock.managers.UserManager;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
@@ -21,11 +22,11 @@ public class ValueCommand extends Command {
     @Override
     public void execute(CommandSender sender, String[] args) {
         Player p = (Player) sender;
-        User user = User.getUser(p);
+        User user = UserManager.getUser(p.getUniqueId());
         Island island;
         if (args.length == 2) {
             OfflinePlayer player = Bukkit.getOfflinePlayer(args[1]);
-            island = User.getUser(player).getIsland();
+            island = UserManager.getUser(player.getUniqueId()).getIsland();
         } else {
             island = user.getIsland();
         }

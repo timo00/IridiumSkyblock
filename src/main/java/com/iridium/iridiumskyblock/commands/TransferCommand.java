@@ -5,6 +5,7 @@ import com.iridium.iridiumskyblock.Island;
 import com.iridium.iridiumskyblock.User;
 import com.iridium.iridiumskyblock.Utils;
 import com.iridium.iridiumskyblock.gui.ConfirmationGUI;
+import com.iridium.iridiumskyblock.managers.UserManager;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
@@ -26,12 +27,12 @@ public class TransferCommand extends Command {
             return;
         }
         Player p = (Player) sender;
-        User user = User.getUser(p);
+        User user = UserManager.getUser(p.getUniqueId());
         if (user.getIsland() != null) {
             Island island = user.getIsland();
             if (island.getOwner().equals(p.getUniqueId().toString())) {
                 OfflinePlayer player = Bukkit.getOfflinePlayer(args[1]);
-                if (User.getUser(player).getIsland() == island) {
+                if (UserManager.getUser(player.getUniqueId()).getIsland() == island) {
                     p.openInventory(new ConfirmationGUI(user.getIsland(), () -> island.setOwner(player), IridiumSkyblock.getMessages().transferAction.replace("%player%", player.getName())).getInventory());
                 } else {
                     sender.sendMessage(Utils.color(IridiumSkyblock.getMessages().notInYourIsland.replace("%prefix%", IridiumSkyblock.getConfiguration().prefix)));
@@ -53,7 +54,7 @@ public class TransferCommand extends Command {
         Player p = (Player) sender;
         if (island != null) {
             OfflinePlayer player = Bukkit.getOfflinePlayer(args[1]);
-            if (User.getUser(player).getIsland() == island) {
+            if (UserManager.getUser(player.getUniqueId()).getIsland() == island) {
                 p.openInventory(new ConfirmationGUI(island, () -> island.setOwner(player), IridiumSkyblock.getMessages().transferAction.replace("%player%", player.getName())).getInventory());
             } else {
                 sender.sendMessage(Utils.color(IridiumSkyblock.getMessages().notInYourIsland.replace("%prefix%", IridiumSkyblock.getConfiguration().prefix)));

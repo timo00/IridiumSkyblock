@@ -2,8 +2,9 @@ package com.iridium.iridiumskyblock.listeners;
 
 import com.iridium.iridiumskyblock.IridiumSkyblock;
 import com.iridium.iridiumskyblock.Island;
-import com.iridium.iridiumskyblock.IslandManager;
 import com.iridium.iridiumskyblock.User;
+import com.iridium.iridiumskyblock.managers.IslandManager;
+import com.iridium.iridiumskyblock.managers.UserManager;
 import org.bukkit.Location;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
@@ -23,7 +24,7 @@ public class EntityPickupItemListener implements Listener {
             if (island == null) return;
 
             final Player player = event.getPlayer();
-            final User user = User.getUser(player);
+            final User user = UserManager.getUser(player.getUniqueId());
             if (!island.getPermissions(user).pickupItems)
                 event.setCancelled(true);
         } catch (Exception ex) {

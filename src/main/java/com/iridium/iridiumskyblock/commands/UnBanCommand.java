@@ -4,6 +4,7 @@ import com.iridium.iridiumskyblock.IridiumSkyblock;
 import com.iridium.iridiumskyblock.Island;
 import com.iridium.iridiumskyblock.User;
 import com.iridium.iridiumskyblock.Utils;
+import com.iridium.iridiumskyblock.managers.UserManager;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
@@ -25,10 +26,10 @@ public class UnBanCommand extends Command {
             return;
         }
         Player p = (Player) sender;
-        User user = User.getUser(p);
+        User user = UserManager.getUser(p.getUniqueId());
         if (user.getIsland() != null) {
             OfflinePlayer player = Bukkit.getOfflinePlayer(args[1]);
-            user.getIsland().removeBan(User.getUser(player));
+            user.getIsland().removeBan(UserManager.getUser(player.getUniqueId()));
             sender.sendMessage(Utils.color(IridiumSkyblock.getMessages().playerUnBanned.replace("%player%", player.getName()).replace("%prefix%", IridiumSkyblock.getConfiguration().prefix)));
         } else {
             sender.sendMessage(Utils.color(IridiumSkyblock.getMessages().noIsland.replace("%prefix%", IridiumSkyblock.getConfiguration().prefix)));
@@ -43,7 +44,7 @@ public class UnBanCommand extends Command {
         }
         if (island != null) {
             OfflinePlayer player = Bukkit.getOfflinePlayer(args[1]);
-            island.removeBan(User.getUser(player));
+            island.removeBan(UserManager.getUser(player.getUniqueId()));
             sender.sendMessage(Utils.color(IridiumSkyblock.getMessages().playerUnBanned.replace("%player%", player.getName()).replace("%prefix%", IridiumSkyblock.getConfiguration().prefix)));
         } else {
             sender.sendMessage(Utils.color(IridiumSkyblock.getMessages().noIsland.replace("%prefix%", IridiumSkyblock.getConfiguration().prefix)));

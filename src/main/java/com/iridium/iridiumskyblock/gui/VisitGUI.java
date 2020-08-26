@@ -4,7 +4,7 @@ import com.iridium.iridiumskyblock.IridiumSkyblock;
 import com.iridium.iridiumskyblock.Island;
 import com.iridium.iridiumskyblock.User;
 import com.iridium.iridiumskyblock.Utils;
-import org.bukkit.OfflinePlayer;
+import com.iridium.iridiumskyblock.managers.UserManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -41,7 +41,7 @@ public class VisitGUI extends GUI implements Listener {
             if (top.size() > i && i >= 0) {
                 Island island = top.get(i);
                 if (island.isVisit()) {
-                    User owner = User.getUser(island.getOwner());
+                    User owner = UserManager.getUser(island.getOwner());
                     ItemStack head = Utils.makeItem(IridiumSkyblock.getInventories().visitisland, Arrays.asList(new Utils.Placeholder("player", owner.name), new Utils.Placeholder("name", island.getName()), new Utils.Placeholder("rank", Utils.getIslandRank(island) + ""), new Utils.Placeholder("votes", NumberFormat.getInstance().format(island.getVotes())), new Utils.Placeholder("value", NumberFormat.getInstance().format(island.getValue()) + "")));
                     islands.put(slot, island.getId());
                     setItem(slot, head);
@@ -67,7 +67,7 @@ public class VisitGUI extends GUI implements Listener {
             if (e.getClickedInventory() == null || !e.getClickedInventory().equals(getInventory())) return;
             if (islands.containsKey(e.getSlot())) {
                 Island island = IridiumSkyblock.getIslandManager().getIslandViaId(islands.get(e.getSlot()));
-                User u = User.getUser((OfflinePlayer) e.getWhoClicked());
+                User u = UserManager.getUser(e.getWhoClicked().getUniqueId());
                 if (island.isVisit() || u.bypassing) {
                     if (e.getClick() == ClickType.RIGHT) {
                         if (island.hasVoted(u)) {

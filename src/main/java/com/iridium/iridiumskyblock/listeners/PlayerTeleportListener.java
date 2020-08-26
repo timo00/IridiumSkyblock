@@ -1,6 +1,11 @@
 package com.iridium.iridiumskyblock.listeners;
 
-import com.iridium.iridiumskyblock.*;
+import com.iridium.iridiumskyblock.IridiumSkyblock;
+import com.iridium.iridiumskyblock.Island;
+import com.iridium.iridiumskyblock.User;
+import com.iridium.iridiumskyblock.Utils;
+import com.iridium.iridiumskyblock.managers.IslandManager;
+import com.iridium.iridiumskyblock.managers.UserManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -19,7 +24,7 @@ public class PlayerTeleportListener implements Listener {
             if (island == null) return;
 
             final Player player = event.getPlayer();
-            final User user = User.getUser(player);
+            final User user = UserManager.getUser(player.getUniqueId());
 
             if (user.islandID == island.getId()) return;
 
@@ -27,9 +32,9 @@ public class PlayerTeleportListener implements Listener {
                 if (!island.isInIsland(event.getFrom())) {
                     Bukkit.getScheduler().scheduleSyncDelayedTask(IridiumSkyblock.getInstance(), () -> island.sendBorder(player), 1);
                     if (user.islandID != island.getId()) {
-                        player.sendMessage(Utils.color(IridiumSkyblock.getMessages().visitingIsland.replace("%player%", User.getUser(island.getOwner()).name).replace("%prefix%", IridiumSkyblock.getConfiguration().prefix)));
+                        player.sendMessage(Utils.color(IridiumSkyblock.getMessages().visitingIsland.replace("%player%", UserManager.getUser(island.getOwner()).name).replace("%prefix%", IridiumSkyblock.getConfiguration().prefix)));
                         for (String pl : island.getMembers()) {
-                            Player p = Bukkit.getPlayer(User.getUser(pl).name);
+                            Player p = Bukkit.getPlayer(UserManager.getUser(pl).name);
                             if (p != null && p.canSee(player)) {
                                 p.sendMessage(Utils.color(IridiumSkyblock.getMessages().visitedYourIsland.replace("%player%", player.getName()).replace("%prefix%", IridiumSkyblock.getConfiguration().prefix)));
                             }

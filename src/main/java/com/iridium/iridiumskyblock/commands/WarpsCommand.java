@@ -1,6 +1,7 @@
 package com.iridium.iridiumskyblock.commands;
 
 import com.iridium.iridiumskyblock.*;
+import com.iridium.iridiumskyblock.managers.UserManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -17,10 +18,10 @@ public class WarpsCommand extends Command {
     @Override
     public void execute(CommandSender sender, String[] args) {
         Player p = (Player) sender;
-        User user = User.getUser(p);
+        User user = UserManager.getUser(p.getUniqueId());
         Island island;
         if (args.length == 2) {
-            island = User.getUser(Bukkit.getOfflinePlayer(args[1])).getIsland();
+            island = UserManager.getUser(Bukkit.getOfflinePlayer(args[1]).getUniqueId()).getIsland();
         } else {
             island = user.getIsland();
         }

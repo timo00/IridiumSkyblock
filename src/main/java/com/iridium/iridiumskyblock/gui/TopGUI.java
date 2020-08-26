@@ -1,7 +1,7 @@
 package com.iridium.iridiumskyblock.gui;
 
 import com.iridium.iridiumskyblock.*;
-import org.bukkit.OfflinePlayer;
+import com.iridium.iridiumskyblock.managers.UserManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -9,11 +9,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class TopGUI extends GUI implements Listener {
 
@@ -32,7 +28,7 @@ public class TopGUI extends GUI implements Listener {
         for (int i : IridiumSkyblock.getConfiguration().islandTopSlots.keySet()) {
             if (top.size() >= i) {
                 Island island = top.get(i - 1);
-                User owner = User.getUser(island.getOwner());
+                User owner = UserManager.getUser(island.getOwner());
                 ArrayList<Utils.Placeholder> placeholders = new ArrayList<>(Arrays.asList(new Utils.Placeholder("player", owner.name), new Utils.Placeholder("name", island.getName()), new Utils.Placeholder("rank", i + ""), new Utils.Placeholder("level", NumberFormat.getInstance().format(island.getValue() / IridiumSkyblock.getConfiguration().valuePerLevel) + ""), new Utils.Placeholder("value", NumberFormat.getInstance().format(island.getValue()) + "")));
                 for (XMaterial item : IridiumSkyblock.getBlockValues().blockvalue.keySet()) {
                     placeholders.add(new Utils.Placeholder(item.name() + "_amount", "" + island.valuableBlocks.getOrDefault(item.name(), 0)));
@@ -58,7 +54,7 @@ public class TopGUI extends GUI implements Listener {
             if (islands.containsKey(e.getSlot())) {
                 e.getWhoClicked().closeInventory();
                 Island island = IridiumSkyblock.getIslandManager().getIslandViaId(islands.get(e.getSlot()));
-                if (island.isVisit() || User.getUser((OfflinePlayer) e.getWhoClicked()).bypassing) {
+                if (island.isVisit() || UserManager.getUser(e.getWhoClicked().getUniqueId()).bypassing) {
                     island.teleportHome((Player) e.getWhoClicked());
                 } else {
                     e.getWhoClicked().sendMessage(Utils.color(IridiumSkyblock.getMessages().playersIslandIsPrivate.replace("%prefix%", IridiumSkyblock.getConfiguration().prefix)));

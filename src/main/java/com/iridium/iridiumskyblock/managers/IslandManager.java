@@ -1,5 +1,6 @@
-package com.iridium.iridiumskyblock;
+package com.iridium.iridiumskyblock.managers;
 
+import com.iridium.iridiumskyblock.*;
 import com.iridium.iridiumskyblock.configs.Config;
 import com.iridium.iridiumskyblock.configs.Schematics;
 import org.bukkit.*;
@@ -13,7 +14,6 @@ import java.util.stream.Collectors;
 public class IslandManager {
 
     public Map<Integer, Island> islands = new HashMap<>();
-    public Map<String, User> users = new HashMap<>();
     public Map<List<Integer>, Set<Integer>> islandCache = new HashMap<>();
 
     int length = 1;
@@ -38,7 +38,7 @@ public class IslandManager {
     }
 
     public void createIsland(Player player) {
-        User user = User.getUser(player);
+        User user = UserManager.getUser(player.getUniqueId());
         if (user.lastCreate != null && new Date().before(user.lastCreate) && IridiumSkyblock.getConfiguration().createCooldown && !user.bypassing) {
             //The user cannot create an island
             long time = (user.lastCreate.getTime() - System.currentTimeMillis()) / 1000;

@@ -4,6 +4,7 @@ import com.iridium.iridiumskyblock.IridiumSkyblock;
 import com.iridium.iridiumskyblock.Island;
 import com.iridium.iridiumskyblock.User;
 import com.iridium.iridiumskyblock.Utils;
+import com.iridium.iridiumskyblock.managers.UserManager;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -54,7 +55,7 @@ public class AdminCommand extends Command {
 
     private void runCommand(String[] args, Player p) {
         OfflinePlayer player = Bukkit.getOfflinePlayer(args[1]);
-        User u = User.getUser(player);
+        User u = UserManager.getUser(player.getUniqueId());
         if (u.getIsland() != null) {
             p.openInventory(u.getIsland().getIslandAdminGUI().getInventory());
         } else {

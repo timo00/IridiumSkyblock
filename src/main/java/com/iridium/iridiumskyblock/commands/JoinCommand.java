@@ -4,6 +4,7 @@ import com.iridium.iridiumskyblock.IridiumSkyblock;
 import com.iridium.iridiumskyblock.Island;
 import com.iridium.iridiumskyblock.User;
 import com.iridium.iridiumskyblock.Utils;
+import com.iridium.iridiumskyblock.managers.UserManager;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
@@ -25,9 +26,9 @@ public class JoinCommand extends Command {
             return;
         }
         Player p = (Player) sender;
-        User user = User.getUser(p);
+        User user = UserManager.getUser(p.getUniqueId());
         OfflinePlayer player = Bukkit.getOfflinePlayer(args[1]);
-        User u = User.getUser(player);
+        User u = UserManager.getUser(player.getUniqueId());
         if (u.getIsland() != null) {
             if (user.getIsland() == null) {
                 Island island = u.getIsland();

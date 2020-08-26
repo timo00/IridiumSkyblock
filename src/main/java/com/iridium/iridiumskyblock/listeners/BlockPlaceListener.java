@@ -4,6 +4,8 @@ import com.iridium.iridiumskyblock.*;
 import com.iridium.iridiumskyblock.configs.Config;
 import com.iridium.iridiumskyblock.configs.Missions.Mission;
 import com.iridium.iridiumskyblock.configs.Missions.MissionData;
+import com.iridium.iridiumskyblock.managers.IslandManager;
+import com.iridium.iridiumskyblock.managers.UserManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -28,7 +30,7 @@ public class BlockPlaceListener implements Listener {
             final IslandManager islandManager = IridiumSkyblock.getIslandManager();
             final Island island = islandManager.getIslandViaLocation(location);
             if (island == null) {
-                User user = User.getUser(event.getPlayer());
+                User user = UserManager.getUser(event.getPlayer().getUniqueId());
                 if (islandManager.isIslandWorld(event.getBlock().getWorld())) {
                     if (!user.bypassing) {
                         event.setCancelled(true);
@@ -38,7 +40,7 @@ public class BlockPlaceListener implements Listener {
             }
 
             final Player player = event.getPlayer();
-            final User user = User.getUser(player);
+            final User user = UserManager.getUser(player.getUniqueId());
 
             final Material material = block.getType();
             final XMaterial xmaterial = XMaterial.matchXMaterial(material);

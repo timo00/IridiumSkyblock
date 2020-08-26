@@ -4,6 +4,7 @@ import com.iridium.iridiumskyblock.IridiumSkyblock;
 import com.iridium.iridiumskyblock.Island;
 import com.iridium.iridiumskyblock.User;
 import com.iridium.iridiumskyblock.Utils;
+import com.iridium.iridiumskyblock.managers.UserManager;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
@@ -25,12 +26,12 @@ public class UnCoopCommand extends Command {
             return;
         }
         Player p = (Player) sender;
-        User user = User.getUser(p);
+        User user = UserManager.getUser(p.getUniqueId());
         if (user.getIsland() != null) {
             OfflinePlayer player = Bukkit.getOfflinePlayer(args[1]);
-            if (!user.getIsland().equals(User.getUser(player).getIsland()) && User.getUser(player).getIsland() != null) {
+            if (!user.getIsland().equals(UserManager.getUser(player.getUniqueId()).getIsland()) && UserManager.getUser(player.getUniqueId()).getIsland() != null) {
                 if (user.bypassing || user.getIsland().getPermissions(user.getRole()).coop) {
-                    user.getIsland().removeCoop(User.getUser(player).getIsland());
+                    user.getIsland().removeCoop(UserManager.getUser(player.getUniqueId()).getIsland());
                 } else {
                     sender.sendMessage(Utils.color(IridiumSkyblock.getMessages().noPermission.replace("%prefix%", IridiumSkyblock.getConfiguration().prefix)));
                 }
@@ -50,8 +51,9 @@ public class UnCoopCommand extends Command {
         }
         if (island != null) {
             OfflinePlayer player = Bukkit.getOfflinePlayer(args[1]);
-            if (!island.equals(User.getUser(player).getIsland()) && User.getUser(player).getIsland() != null) {
-                island.removeCoop(User.getUser(player).getIsland());
+            User user = UserManager.getUser(player.getUniqueId());
+            if (!island.equals(user.getIsland()) && user.getIsland() != null) {
+                island.removeCoop(user.getIsland());
             } else {
                 sender.sendMessage(Utils.color(IridiumSkyblock.getMessages().playerNoIsland.replace("%prefix%", IridiumSkyblock.getConfiguration().prefix)));
             }

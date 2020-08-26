@@ -2,6 +2,7 @@ package com.iridium.iridiumskyblock.gui;
 
 import com.iridium.iridiumskyblock.*;
 import com.iridium.iridiumskyblock.configs.Schematics;
+import com.iridium.iridiumskyblock.managers.UserManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -44,7 +45,7 @@ public class SchematicSelectGUI extends GUI implements Listener {
                     e.getWhoClicked().closeInventory();
                     if (getIsland().getSchematic() != null) {
                         for (String player : getIsland().getMembers()) {
-                            User user = User.getUser(player);
+                            User user = UserManager.getUser(player);
                             Player p = Bukkit.getPlayer(user.name);
                             if (p != null) {
                                 p.sendMessage(Utils.color(IridiumSkyblock.getMessages().regenIsland.replace("%prefix%", IridiumSkyblock.getConfiguration().prefix)));

@@ -4,6 +4,7 @@ import com.iridium.iridiumskyblock.IridiumSkyblock;
 import com.iridium.iridiumskyblock.Island;
 import com.iridium.iridiumskyblock.User;
 import com.iridium.iridiumskyblock.Utils;
+import com.iridium.iridiumskyblock.managers.UserManager;
 import net.md_5.bungee.api.chat.*;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -26,9 +27,9 @@ public class InviteCommand extends Command {
             return;
         }
         Player p = (Player) sender;
-        User user = User.getUser(p);
+        User user = UserManager.getUser(p.getUniqueId());
         OfflinePlayer player = Bukkit.getOfflinePlayer(args[1]);
-        User u = User.getUser(player);
+        User u = UserManager.getUser(player.getUniqueId());
         if (user.getIsland() != null) {
             if (u.getIsland() == null) {
                 if (user.bypassing || user.getIsland().getPermissions(user.role).inviteMembers) {
@@ -53,7 +54,7 @@ public class InviteCommand extends Command {
         }
         Player p = (Player) sender;
         OfflinePlayer player = Bukkit.getOfflinePlayer(args[1]);
-        User u = User.getUser(player);
+        User u = UserManager.getUser(player.getUniqueId());
         if (island != null) {
             if (u.getIsland() == null) {
                 u.invites.add(island.getId());

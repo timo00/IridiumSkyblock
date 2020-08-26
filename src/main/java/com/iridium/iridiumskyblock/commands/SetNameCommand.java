@@ -1,6 +1,7 @@
 package com.iridium.iridiumskyblock.commands;
 
 import com.iridium.iridiumskyblock.*;
+import com.iridium.iridiumskyblock.managers.UserManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -17,7 +18,7 @@ public class SetNameCommand extends Command {
     @Override
     public void execute(CommandSender sender, String[] args) {
         Player p = (Player) sender;
-        User user = User.getUser(p);
+        User user = UserManager.getUser(p.getUniqueId());
         if (args.length != 2) {
             sender.sendMessage(Utils.color(IridiumSkyblock.getConfiguration().prefix) + "/is setname <Island Name>");
             return;
@@ -26,7 +27,7 @@ public class SetNameCommand extends Command {
             if (user.role.equals(Role.Owner)) {
                 user.getIsland().setName(args[1]);
                 for (String member : user.getIsland().getMembers()) {
-                    Player player = Bukkit.getPlayer(User.getUser(member).name);
+                    Player player = Bukkit.getPlayer(UserManager.getUser(member).name);
                     if (player != null) {
                         player.sendMessage(Utils.color(IridiumSkyblock.getMessages().changesIslandName.replace("%player%", p.getName()).replace("%name%", args[1]).replace("%prefix%", IridiumSkyblock.getConfiguration().prefix)));
                     }
@@ -49,7 +50,7 @@ public class SetNameCommand extends Command {
         if (island != null) {
             island.setName(args[1]);
             for (String member : island.getMembers()) {
-                Player player = Bukkit.getPlayer(User.getUser(member).name);
+                Player player = Bukkit.getPlayer(UserManager.getUser(member).name);
                 if (player != null) {
                     player.sendMessage(Utils.color(IridiumSkyblock.getMessages().changesIslandName.replace("%player%", p.getName()).replace("%name%", args[1]).replace("%prefix%", IridiumSkyblock.getConfiguration().prefix)));
                 }

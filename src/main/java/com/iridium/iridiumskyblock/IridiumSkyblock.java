@@ -6,6 +6,9 @@ import com.iridium.iridiumskyblock.commands.CommandManager;
 import com.iridium.iridiumskyblock.configs.*;
 import com.iridium.iridiumskyblock.gui.*;
 import com.iridium.iridiumskyblock.listeners.*;
+import com.iridium.iridiumskyblock.managers.IslandManager;
+import com.iridium.iridiumskyblock.managers.SQLManager;
+import com.iridium.iridiumskyblock.managers.UserManager;
 import com.iridium.iridiumskyblock.nms.NMS;
 import com.iridium.iridiumskyblock.placeholders.ClipPlaceholderAPIManager;
 import com.iridium.iridiumskyblock.placeholders.MVDWPlaceholderAPIManager;
@@ -463,7 +466,7 @@ public class IridiumSkyblock extends JavaPlugin {
                         island.setCrystals((int) Math.floor(island.getCrystals() * (1 + (getConfiguration().dailyCrystalsInterest / 100.00))));
                         island.exp = (int) Math.floor(island.exp * (1 + (getConfiguration().dailyExpInterest / 100.00)));
                         for (String member : island.getMembers()) {
-                            Player p = Bukkit.getPlayer(User.getUser(member).name);
+                            Player p = Bukkit.getPlayer(UserManager.getUser(member).name);
                             if (p != null) {
                                 if (cm != island.money && cc != island.getCrystals() && ce != island.exp)
                                     p.sendMessage(Utils.color(IridiumSkyblock.getMessages().islandInterest.replace("%exp%", island.exp - ce + "").replace("%crystals%", island.getCrystals() - cc + "").replace("%money%", island.money - cm + "").replace("%prefix%", IridiumSkyblock.getConfiguration().prefix)));
@@ -711,6 +714,7 @@ public class IridiumSkyblock extends JavaPlugin {
 
         sqlManager = new SQLManager();
         sqlManager.setupConnection();
+        sqlManager.createTables();
 
         return true;
     }

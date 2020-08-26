@@ -2,9 +2,10 @@ package com.iridium.iridiumskyblock.listeners;
 
 import com.iridium.iridiumskyblock.IridiumSkyblock;
 import com.iridium.iridiumskyblock.Island;
-import com.iridium.iridiumskyblock.IslandManager;
 import com.iridium.iridiumskyblock.User;
 import com.iridium.iridiumskyblock.Utils;
+import com.iridium.iridiumskyblock.managers.IslandManager;
+import com.iridium.iridiumskyblock.managers.UserManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -34,7 +35,7 @@ public class PlayerJoinLeaveListener implements Listener {
             final IslandManager islandManager = IridiumSkyblock.getIslandManager();
             if (!islandManager.isIslandWorld(location)) return;
 
-            final User user = User.getUser(player);
+            final User user = UserManager.getUser(player.getUniqueId());
             user.name = player.getName();
 
             if (user.flying && (user.getIsland() == null || user.getIsland().getFlightBooster() == 0)) {
