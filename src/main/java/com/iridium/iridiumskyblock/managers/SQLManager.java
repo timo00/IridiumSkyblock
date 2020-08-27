@@ -33,7 +33,7 @@ public class SQLManager {
             } catch (SQLException ex) {
                 IridiumSkyblock.getInstance().getLogger().log(Level.SEVERE, "SQL exception on initialize", ex);
             } catch (ClassNotFoundException ex) {
-                IridiumSkyblock.getInstance().getLogger().log(Level.SEVERE, "You need the SQL library.");
+                IridiumSkyblock.getInstance().getLogger().log(Level.SEVERE, "Could not find SQL library");
             }
         } else {
             //Use SQL
@@ -43,7 +43,7 @@ public class SQLManager {
             } catch (SQLException ex) {
                 IridiumSkyblock.getInstance().getLogger().log(Level.SEVERE, "SQLite exception on initialize", ex);
             } catch (ClassNotFoundException ex) {
-                IridiumSkyblock.getInstance().getLogger().log(Level.SEVERE, "You need the SQLite JBDC library. Google it. Put it in /lib folder.");
+                IridiumSkyblock.getInstance().getLogger().log(Level.SEVERE, "Could not find SQL library");
             }
         }
     }

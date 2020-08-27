@@ -165,9 +165,6 @@ public class IridiumSkyblock extends JavaPlugin {
 
                 Bukkit.getScheduler().scheduleAsyncRepeatingTask(IridiumSkyblock.getInstance(), this::saveIslandManager, 0, 20 * 60);
 
-                if (configuration.doIslandBackup)
-                    Bukkit.getScheduler().scheduleAsyncRepeatingTask(IridiumSkyblock.getInstance(), this::backupIslandManager, 0, 20 * 60 * getConfiguration().backupIntervalMinutes);
-
                 Bukkit.getScheduler().scheduleAsyncRepeatingTask(IridiumSkyblock.getInstance(), this::addPages, 0, 20 * 60);
 
                 setupPlaceholderAPI();
@@ -388,26 +385,6 @@ public class IridiumSkyblock extends JavaPlugin {
             }
             getPersist().getFile(islandManager).delete();
             getPersist().getFile("IslandManager_temp").renameTo(getPersist().getFile(islandManager));
-        }
-    }
-
-    public void backupIslandManager() {
-        if (islandManager != null) {
-            File backupsFolder = new File(getDataFolder(), "backups");
-            if (!backupsFolder.exists()) backupsFolder.mkdir();
-            Calendar cal = Calendar.getInstance();
-            cal.add(Calendar.DATE, -getConfiguration().deleteBackupsAfterDays);
-            for (File file : backupsFolder.listFiles()) {
-                Date date = getLocalDateTime(file.getName().replace(".json", "").replace("IslandManager_", ""));
-                if (date == null) {
-                    file.delete();
-                } else {
-                    if (date.before(cal.getTime())) {
-                        file.delete();
-                    }
-                }
-            }
-            getPersist().save(islandManager, new File(backupsFolder, "IslandManager_" + getCurrentTimeStamp() + ".json"));
         }
     }
 

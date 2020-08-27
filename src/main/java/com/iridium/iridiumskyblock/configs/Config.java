@@ -18,7 +18,6 @@ public class Config {
     public String chatLevelPlaceholder = "[ISLAND_LEVEL]";
     public String placeholderDefaultValue = "N/A";
     public boolean createCooldown = true;
-    public boolean doIslandBackup = true;
     public boolean islandShop = true;
     public boolean automaticUpdate = true;
     public boolean defaultIslandPublic = true;
@@ -35,10 +34,8 @@ public class Config {
     public boolean allowExplosions = true;
     public boolean disablePvPBetweenIslandMembers = true;
     public boolean disablePvPOnIslands = true;
-    public int deleteBackupsAfterDays = 7;
     public int regenCooldown = 3600;
     public int distance = 151;
-    public int backupIntervalMinutes = 60;
     public int valueUpdateInterval = 20 * 30;
     public double valuePerLevel = 100.00;
     public double dailyMoneyInterest = 0.5;
