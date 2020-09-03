@@ -53,11 +53,6 @@ public class SQLManager {
             connection.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS users "
                     + "(UUID VARCHAR(255), name VARCHAR(255), island INTEGER, role VARCHAR(255), bypassing BOOLEAN, chat BOOLEAN, flying BOOLEAN, lastecreate BIGINT, PRIMARY KEY (UUID));");
 
-            connection.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS islands "
-                    + "(id INTEGER, pos1x INTEGER, pos1z INTEGER, pos2x INTEGER, pos2z INTEGER, homex INTEGER, homey INTEGER, homez INTEGER, spawnerBooster INTEGER, farmingBooster INTEGER, expBooster INTEGER, flightBooster INTEGER, " +
-                    "crystals INTEGER, sizeLevel INTEGER, memberLevel INTEGER, warpLevel INTEGER, oreLevel INTEGER, value DOUBLE, startvalue DOUBLE, extravalue DOUBLE, visit BOOLEAN, borderColor STRING, schematic STRING, netherschematic STRING, " +
-                    "name STRING, money DOUBLE, exp INTEGER, biome STRING, lastRegen BIGINT, PRIMARY KEY (id));");
-
             connection.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS claims "
                     + "(x INTEGER, z INTEGER, island INTEGER);");
 

@@ -32,8 +32,6 @@ import java.io.*;
 import java.lang.reflect.Field;
 import java.net.URL;
 import java.net.URLConnection;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -385,21 +383,6 @@ public class IridiumSkyblock extends JavaPlugin {
             }
             getPersist().getFile(islandManager).delete();
             getPersist().getFile("IslandManager_temp").renameTo(getPersist().getFile(islandManager));
-        }
-    }
-
-    public String getCurrentTimeStamp() {
-        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");//dd/MM/yyyy
-        Date now = new Date();
-        return sdfDate.format(now);
-    }
-
-    public Date getLocalDateTime(String time) {
-        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");//dd/MM/yyyy
-        try {
-            return sdfDate.parse(time);
-        } catch (ParseException e) {
-            return null;
         }
     }
 
