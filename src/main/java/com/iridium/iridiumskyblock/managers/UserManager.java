@@ -3,6 +3,8 @@ package com.iridium.iridiumskyblock.managers;
 import com.iridium.iridiumskyblock.IridiumSkyblock;
 import com.iridium.iridiumskyblock.Role;
 import com.iridium.iridiumskyblock.User;
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,7 +16,7 @@ public class UserManager {
 
     public static HashMap<UUID, User> cache = new HashMap<>();
 
-    public static User getUser(String uuid){
+    public static User getUser(String uuid) {
         return getUser(UUID.fromString(uuid));
     }
 
@@ -40,10 +42,11 @@ public class UserManager {
                 cache.put(uuid, user);
                 return user;
             } else {
+                OfflinePlayer player = Bukkit.getOfflinePlayer(uuid);
                 //There is no value so create one
                 PreparedStatement insert = IridiumSkyblock.getSqlManager().getConnection().prepareStatement("INSERT INTO users (UUID,name,island,role,bypassing,chat,flying,lastecreate) VALUES (?,?,?,?,?,?,?,?);");
                 insert.setString(1, uuid.toString());
-                insert.setString(2, "");
+                insert.setString(2, player.getName());
                 insert.setInt(3, 0);
                 insert.setString(4, Role.Visitor.name());
                 insert.setBoolean(5, false);
